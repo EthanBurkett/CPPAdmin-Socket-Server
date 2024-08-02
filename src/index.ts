@@ -1,7 +1,8 @@
 import http from "http";
 import express from "express";
-
+import mongoose from "mongoose";
 import socketio from "socket.io";
+import SettingsModel from "./models/Settings.model";
 
 const app = express();
 const expressServer = http.createServer(app);
@@ -13,7 +14,7 @@ const io = new socketio.Server(expressServer, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("message", (message: string) => {
+  socket.on("message", async (message: string) => {
     let request: { event: string; data: any; api_key: string };
     try {
       request = JSON.parse(message);
@@ -35,11 +36,23 @@ io.on("connection", (socket) => {
       if (value == "") request.data[key] = null;
     }
 
+    const api_key = await SettingsModel.findOne({ key: "api_key" }).catch(
+      () => null
+    );
+    if (!api_key || api_key.value !== request.api_key) {
+      return;
+    }
+
     io.emit("message", request);
   });
 });
 
 (async () => {
+  mongoose.set("strictQuery", true);
+  await mongoose.connect("mongodb://localhost:27017/cppadmin").then(() => {
+    console.log("Connected to MongoDB");
+  });
+
   expressServer
     .listen({
       host: "127.0.0.1",

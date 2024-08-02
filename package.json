@@ -20,6 +20,7 @@
     "express": "^4.19.2",
     "grpc-tools": "^1.12.4",
     "long": "^5.2.3",
+    "mongoose": "^8.5.2",
     "nice-grpc": "^2.1.9",
     "protobufjs": "^7.3.2",
     "socket.io": "^4.7.5",
