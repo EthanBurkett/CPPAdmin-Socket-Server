@@ -1,0 +1,28 @@
+{
+  "name": "cppadmin_grpc-server",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^4.17.21"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.11.1",
+    "@grpc/proto-loader": "^0.7.13",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "grpc-tools": "^1.12.4",
+    "long": "^5.2.3",
+    "nice-grpc": "^2.1.9",
+    "protobufjs": "^7.3.2",
+    "socket.io": "^4.7.5",
+    "ts-proto": "^1.181.1"
+  }
+}
